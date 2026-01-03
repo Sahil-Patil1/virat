@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swiggy Clone</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #fc8019;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    .login-btn {
+      background-color: white;
+      color: #fc8019;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 40px;
+      background-color: white;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: gray;
+    }
+
+    /* Restaurants */
+    .restaurant-section {
+      padding: 30px;
+    }
+
+    .restaurant-section h2 {
+      margin-bottom: 15px;
+    }
+
+    .restaurant-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .restaurant-card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .restaurant-card:hover {
+      transform: scale(1.03);
+    }
+
+    .restaurant-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .restaurant-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .restaurant-card p {
+      color: gray;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Swiggy</div>
+    <input type="text" id="search" placeholder="Search for restaurants or food">
+    <button class="login-btn">Login</button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Order food online</h1>
+    <p>From your favorite restaurants</p>
+  </section>
+
+  <!-- Restaurant List -->
+  <section class="restaurant-section">
+    <h2>Restaurants near you</h2>
+    <div id="restaurant-list" class="restaurant-list"></div>
+  </section>
+
+  <script>
+    const restaurants = [
+      {
+        name: "Burger House",
+        cuisine: "Fast Food",
+        rating: "4.3",
+        image: "https://via.placeholder.com/300x180"
+      },
+      {
+        name: "Spicy Biryani",
+        cuisine: "Indian",
+        rating: "4.5",
+        image: "https://via.placeholder.com/300x180"
+      },
+      {
+        name: "Pizza Corner",
+        cuisine: "Italian",
+        rating: "4.2",
+        image: "https://via.placeholder.com/300x180"
+      },
+      {
+        name: "Chinese Wok",
+        cuisine: "Chinese",
+        rating: "4.1",
+        image: "https://via.placeholder.com/300x180"
+      }
+    ];
+
+    const list = document.getElementById("restaurant-list");
+    const search = document.getElementById("search");
+
+    function displayRestaurants(data) {
+      list.innerHTML = "";
+      data.forEach(res => {
+        const card = document.createElement("div");
+        card.className = "restaurant-card";
+        card.innerHTML = `
+          <img src="${res.image}" alt="${res.name}">
+          <h3>${res.name}</h3>
+          <p>${res.cuisine}</p>
+          <p>⭐ ${res.rating}</p>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    search.addEventListener("input", (e) => {
+      const value = e.target.value.toLowerCase();
+      const filtered = restaurants.filter(r =>
+        r.name.toLowerCase().includes(value)
+      );
+      displayRestaurants(filtered);
+    });
+
+    displayRestaurants(restaurants);
+  </script>
+
+</body>
+</html>
